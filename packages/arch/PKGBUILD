@@ -1,0 +1,78 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# See http://wiki.archlinux.org/index.php/VCS_PKGBUILD_Guidelines
+# for more information on packaging from SVN sources.
+
+# Maintainer: IRoN <pety3bi@gmail.com>
+pkgname=ps3netsrv
+pkgver=r5.836ad00
+pkgrel=1
+pkgdesc="NETISO support for network loading of PS3 games in ISO and folder format, DVD videos in ISO format, Blu-ray movies in ISO format, PS1 and PSP games"
+arch=(i686 x86_64)
+url="https://github.com/pety3bi/ps3netsrv"
+license=('GPL2')
+groups=()
+depends=()
+makedepends=('git')
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+source=('git://github.com/pety3bi/ps3netsrv.git'
+        'ps3netsrv.service')
+noextract=()
+md5sums=('SKIP'
+         '27383d12e7352a8449830d1e9d4117b2')
+
+pkgver() {
+  cd "$pkgname"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  #date +%Y%m%d
+  #printf "%s" "$(git describe --long | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+}
+
+build() {
+  #cd "$srcdir/${_gitname}/ps3netsrv"
+  cd "$pkgname"
+
+  #
+  # BUILD HERE
+  #
+  aclocal
+  autoheader
+  libtoolize
+  automake --foreign --add-missing
+  autoconf
+
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  #cd "$srcdir/${_gitname}/ps3netsrv"
+  cd "$pkgname"
+  make DESTDIR="$pkgdir/" install
+
+  install -d -m644 $pkgdir/usr/share/ps3netsrv
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/BDISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/DVDISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/GAMES
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/MUSIC
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PICTURE
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PKG
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PS2ISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PS3ISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PSPISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/PSXISO
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/ROMS
+  install -d -m644 $pkgdir/usr/share/ps3netsrv/VIDEO
+
+  install -D -m644 $srcdir/ps3netsrv.service $pkgdir/usr/lib/systemd/system/ps3netsrv.service
+}
+
+# vim:set ts=2 sw=2 et:

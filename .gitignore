@@ -5,6 +5,7 @@
 *.scan
 *.guess
 *.in
+*.*~
 *.status
 *.scan
 *.sub

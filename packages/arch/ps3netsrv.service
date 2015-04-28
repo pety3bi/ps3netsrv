@@ -1,0 +1,11 @@
+[Unit]
+Description=ps3netsrv daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/ps3netsrv /usr/share/ps3netsrv
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
