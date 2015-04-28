@@ -8,7 +8,7 @@
 
 # Maintainer: IRoN <pety3bi@gmail.com>
 pkgname=ps3netsrv
-pkgver=r5.836ad00
+pkgver=r6.644c338
 pkgrel=1
 pkgdesc="NETISO support for network loading of PS3 games in ISO and folder format, DVD videos in ISO format, Blu-ray movies in ISO format, PS1 and PSP games"
 arch=(i686 x86_64)
